@@ -13,7 +13,7 @@ server.listen(PORT, () => {
 });
 
 // 2. Apna Bot Token
-const token = '8021358033:AAHn4EkOOt8JPASAuZTyAWuRuLYw8TWrceA'; 
+const token = '8621356083:AAG2_7x_Tq09uwb4YgDMH3n8l8F4YyNURhk'; 
 const bot = new TelegramBot(token, { 
     polling: {
         autoStart: true,
