@@ -100,5 +100,4 @@ function action(bot, chatId, move) {
     }
   );
 }
-
 module.exports = { start, action };
