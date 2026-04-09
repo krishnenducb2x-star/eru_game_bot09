@@ -66,3 +66,19 @@ bot.on('message', (msg) => {
 // 6. Error handling
 bot.on('polling_error', (err) => console.log("Polling Error: " + err.message));
 bot.on('error', (err) => console.log("General Error: " + err.message));
+// Buttons ke click (callback_query) ko handle karne ke liye
+bot.on('callback_query', (query) => {
+    const chatId = query.message.chat.id;
+    const data = query.data;
+
+    // Agar button Battle Game ka hai
+    if (data.startsWith('battle_')) {
+        if (games.battle && typeof games.battle.action === 'function') {
+            // Ye battleGame.js ke action function ko chalayega
+            games.battle.action(bot, chatId, data);
+        }
+    }
+    
+    // Buttons ke upar se loading spinner hatane ke liye
+    bot.answerCallbackQuery(query.id);
+});
