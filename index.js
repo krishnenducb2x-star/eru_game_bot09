@@ -14,7 +14,7 @@ server.listen(PORT, () => {
 
 // 2. Apna Bot Token (Securely)
 // Note: Sab sahi hone ke baad is token ko Render ke Environment Variables mein daal dena.
-const token = '8021358033:AAHkMGA-XKemBLD509cwMXGznz3d4o1kyUw'; 
+const token = '8621356083:AAEY032ka01BSh6mFzAlhiGqVGQBm9QXT50'; 
 
 const bot = new TelegramBot(token, { 
     polling: {
