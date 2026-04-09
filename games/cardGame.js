@@ -1,5 +1,5 @@
 // cardGame.js
-let activeGames = {};   // ← Yeh missing tha!
+let activeGames = {};
 
 function getCard() {
     const suits = ['♠️', '♥️', '♦️', '♣️'];
@@ -11,10 +11,10 @@ function getCard() {
 }
 
 function getCardValue(card) {
-    const val = card.value.replace(/[\u2660\u2665\u2666\u2663]/g, '').trim();
+    let val = card.value.replace(/[^2-9JQKA]/g, '').trim();
     if (['J', 'Q', 'K'].includes(val)) return 10;
     if (val === 'A') return 11;
-    return parseInt(val);
+    return parseInt(val) || 0;
 }
 
 function start(bot, chatId, userId) {
@@ -26,11 +26,7 @@ function start(bot, chatId, userId) {
     const playerTotal = getCardValue(playerCard1) + getCardValue(playerCard2);
     const botTotal = getCardValue(botCard1) + getCardValue(botCard2);
 
-    activeGames[chatId] = { 
-        playerTotal, 
-        botTotal, 
-        userId 
-    };
+    activeGames[chatId] = { playerTotal, botTotal, userId };
 
     bot.sendMessage(chatId, 
         `🎴 *Card Game Started!*\n\n` +
@@ -58,14 +54,17 @@ function hit(bot, chatId) {
     game.playerTotal += getCardValue(newCard);
 
     if (game.playerTotal > 21) {
-        bot.sendMessage(chatId, `💥 Naya card: \( {newCard.value} \){newCard.suit}\n\n` +
+        bot.sendMessage(chatId, 
+            `💥 Naya card: \( {newCard.value} \){newCard.suit}\n\n` +
             `Tumhara total: *${game.playerTotal}* (Bust!)\n\n` +
-            `Tum haar gaye! 😢`, { parse_mode: 'Markdown' });
+            `Tum haar gaye! 😢`, 
+            { parse_mode: 'Markdown' }
+        );
         delete activeGames[chatId];
         return;
     }
 
-    bot.sendMessage(chatId, 
+    bot.sendMessage(chatId,
         `Naya card: \( {newCard.value} \){newCard.suit}\n` +
         `Tumhara total: *${game.playerTotal}*`,
         {
